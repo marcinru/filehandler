@@ -46,6 +46,7 @@ body {
 }
 
 .table td {
+    min-width: 80px;
     text-transform: capitalize;
     word-break: break-word;
 }
