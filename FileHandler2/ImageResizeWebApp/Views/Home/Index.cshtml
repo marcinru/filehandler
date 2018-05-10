@@ -9,7 +9,7 @@
     <div class="box header">
         <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">File Handler in the Cloud</span></h1>
     </div>
-    <div class="box content">
+    <div class="box content" id="app">
         <hr>
         <h2>Upload photos</h2>
         <div>
@@ -36,7 +36,14 @@
                     <th>Created by</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody v-cloak>
+                <tr v-for="file in files">
+                    <td>{{file.fileName}}</td>
+                    <td>{{file.fileUid}}</td>
+                    <td>{{file.dateCreated}}</td>
+                    <td>{{file.createdBy}}</td>
+                </tr>
+            </tbody>
         </table>
 
         <!--
@@ -63,7 +70,7 @@
         -->
     </div>
 </main>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>

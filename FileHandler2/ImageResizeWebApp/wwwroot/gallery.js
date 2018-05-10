@@ -1,23 +1,21 @@
-﻿$(function() {
-    $.ajax({
-      url: 'http://filehandler2hackathonapi.azurewebsites.net/api/file/list',
-      type: 'POST',
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      success: function(res) {
-        console.log(res)
-        res.files.forEach(function(file) {
-            var tr = $(`<tr>
-                <td>${file.fileName}</td>
-                <td>${file.fileUid}</td>
-                <td>${file.dateCreated}</td>
-                <td>${file.createdBy}</td>
-            </tr>`)
-            $('.table tbody').append(tr)
+﻿new Vue({
+    el: '#app',
+    data: {
+        files: []
+    },
+    created: function() {
+        var vm = this;
+        $.ajax({
+          url: 'http://filehandler2hackathonapi.azurewebsites.net/api/file/list',
+          type: 'POST',
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function(res) {
+            vm.files = res.files
+          }
         })
-      }
-    })
-});
+    }
+})
 
 // init gallery for later use
 var gallery;

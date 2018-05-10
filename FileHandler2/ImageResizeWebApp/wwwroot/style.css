@@ -45,3 +45,7 @@ body {
     background: white;
     margin: 2em 0;
 }
+
+[v-cloak] {
+    display: none;
+}
