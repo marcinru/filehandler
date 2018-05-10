@@ -53,3 +53,7 @@ body {
     max-height: 300px;
     max-width: 400px;
 }
+
+.card {
+    padding: 10px;
+}
