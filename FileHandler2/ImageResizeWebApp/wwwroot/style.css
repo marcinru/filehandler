@@ -21,7 +21,6 @@ main {
     background: #F0F8FF;
     margin: 0;
     border-radius: 5px;
-    max-width: 400px;
 }
 
     .dropzone .dz-message {
@@ -42,7 +41,7 @@ body {
 }
 
 .table {
-    background: white;
+    background: rgba(255, 255, 255, 0.7);
     margin: 2em 0;
 }
 

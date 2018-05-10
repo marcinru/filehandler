@@ -1,4 +1,8 @@
-﻿new Vue({
+﻿var options = {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+};
+new Vue({
     el: '#app',
     data: {
         files: [],
@@ -18,7 +22,11 @@
           contentType: 'application/json; charset=utf-8',
           dataType: 'json',
           success: function(res) {
-            vm.files = res.files
+            res.files.forEach(f => {
+                f.dateCreated = (new Date(f.dateCreated))
+                        .toLocaleDateString('nb-NO', options)
+            })
+            vm.files = res.files;
           }
         })
     }
