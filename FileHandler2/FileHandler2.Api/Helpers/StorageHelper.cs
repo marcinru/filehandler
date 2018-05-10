@@ -56,5 +56,31 @@ namespace FileHandler2.Api.Helpers
             return await Task.FromResult(result);
         }
 
+        public static async Task<MemoryStream> GetFileContent(AzureStorageConfig _storageConfig, Guid fileUid)
+        {
+
+            // Create storagecredentials object by reading the values from the configuration (appsettings.json)
+            StorageCredentials storageCredentials = new StorageCredentials(_storageConfig.AccountName, _storageConfig.AccountKey);
+
+            // Create cloudstorage account by passing the storagecredentials
+            CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
+
+            // Create blob client
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Get reference to the container
+            CloudBlobContainer container = blobClient.GetContainerReference(_storageConfig.FileHandlerContainer);
+
+            // Set the permission of the container to public
+            await container.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference($"{fileUid}");
+
+            MemoryStream memStream = new MemoryStream();
+            await blockBlob.DownloadToStreamAsync(memStream);
+
+            return memStream;
+        }
+
     }
 }
