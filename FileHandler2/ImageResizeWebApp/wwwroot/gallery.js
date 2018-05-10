@@ -1,7 +1,14 @@
 ﻿new Vue({
     el: '#app',
     data: {
-        files: []
+        files: [],
+        search: ''
+    },
+    computed: {
+        filteredFiles() {
+            const regex = new RegExp(this.search, 'gi');
+            return this.files.filter(file => file.fileName.match(regex));
+        }
     },
     created: function() {
         var vm = this;
