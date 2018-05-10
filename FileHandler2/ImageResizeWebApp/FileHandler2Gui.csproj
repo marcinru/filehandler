@@ -39,9 +39,13 @@
   <ItemGroup>
     <Content Remove="wwwroot\gallery.js" />
     <Content Remove="wwwroot\EmptyCSSFile.css" />
+    <Content Remove="wwwroot\vue.min.js" />
+    <Content Remove="wwwroot\jquery.min.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\gallery.js" />
     <None Include="wwwroot\style.css" />
+    <None Include="wwwroot\vue.min.js" />
+    <None Include="wwwroot\jquery.min.js" />
   </ItemGroup>
 </Project>

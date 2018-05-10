@@ -45,6 +45,7 @@
                     <th>Upload date</th>
                     <th>Created by</th>
                     <th>Tags</th>
+                    <th>Download</th>
                 </tr>
             </thead>
             <tbody v-cloak>
@@ -54,15 +55,12 @@
                     <td>{{file.dateCreated}}</td>
                     <td>{{file.createdBy}}</td>
                     <td>{{file.tags}}</td>
+                    <td><button class="btn btn-primary">Download</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="~/gallery.js"></script>
+
 <script src="~/base64js.min.js"></script>
+<script src="~/gallery.js"></script>

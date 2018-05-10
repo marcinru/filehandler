@@ -1,16 +1,8 @@
 ﻿var options = {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit', second: '2-digit'
-};
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
-var vm = new Vue({
+},
+vm = new Vue({
     el: '#app',
     data: {
         files: [],
@@ -48,10 +40,9 @@ var vm = new Vue({
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(this.fileToUpload),
-                dataType: 'json',
-                success: function (res) {
-                    vm.removeImage()
-                }
+                cache: false,
+            }).done(function (res) {
+                vm.removeImage()
             })
         },
         onFileChange(e) {
@@ -85,6 +76,15 @@ var vm = new Vue({
         },
         removeImage: function (e) {
           this.image = '';
+          this.fileToUpload = {};
         }
       }
-})
+    })
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
