@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FileHandler2.Api.Dto;
 using FileHandler2.Api.Helpers;
@@ -49,14 +50,28 @@ namespace FileHandler2.Api.Controllers
         }
 
         [HttpGet]
-        public FileDownloadResponseDto Download([FromQuery]Guid fileUid)
+        public async Task<FileDownloadResponseDto> Download([FromQuery]Guid fileUid)
         {
-            return new FileDownloadResponseDto()
+            //db side
+            var dbFileData = _context.FileReferences.FirstOrDefault(u => u.FileUid == fileUid);
+
+            if (dbFileData != null)
             {
-                Size = 100,
-                Type = "image",
-                Content = null
-            };
+                MemoryStream response = await StorageHelper.GetFileContent(_storageConfig, fileUid);
+                
+
+                return new FileDownloadResponseDto()
+                {
+                    Size = dbFileData.FileSize,
+                    Type = "file",
+                    Content = response.ToArray(),
+                    FileName = dbFileData.Name
+                };
+            }
+            else
+            {
+                throw new HttpRequestException("File not found");
+            }
         }
 
 
