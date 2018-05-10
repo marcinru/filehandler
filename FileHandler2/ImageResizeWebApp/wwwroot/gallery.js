@@ -8,7 +8,9 @@ vm = new Vue({
         files: [],
         search: '',
         image: '',
-        fileToUpload: {}
+        fileToUpload: {},
+        currentImg: '',
+        modalTitle: ''
     },
     computed: {
         filteredFiles() {
@@ -50,11 +52,10 @@ vm = new Vue({
             var fileUid = '6d2b9487-9b0f-470f-a381-3276cb296e87';
             $.get('https://filehandler2hackathonapi.azurewebsites.net/api/file/Download?fileUid=' + uid,
                 function(res) {
-                    var image = new Image();
+                    vm.modalTitle = res.fileName;
                     var indexLast = res.fileName.lastIndexOf('.')
                     var extension = res.fileName.substring(indexLast + 1);
-                    image.src = 'data:image/' + extension + ';base64,' + res.content;
-                    document.body.appendChild(image);
+                    vm.currentImg = 'data:image/' + extension + ';base64,' + res.content;
                 })
         },
         onFileChange(e) {

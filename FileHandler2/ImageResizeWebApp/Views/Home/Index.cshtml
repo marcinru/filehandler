@@ -1,9 +1,8 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/css/blueimp-gallery.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 <link href="style.css" rel="stylesheet" />
 <main class="container-fluid">
     <div class="box header">
@@ -51,12 +50,17 @@
                     <td>{{file.dateCreated}}</td>
                     <td>{{file.createdBy}}</td>
                     <td>{{file.tags}}</td>
-                    <td><button v-on:click="getFile(file.fileUid)" class="btn btn-primary">Show</button></td>
+                    <td><button v-b-modal.modal1 v-on:click="getFile(file.fileUid)" class="btn btn-primary">Show</button></td>
                 </tr>
             </tbody>
         </table>
+        <!-- Modal Component -->
+        <b-modal id="modal1" :title="modalTitle" hide-footer="true" size="lg">
+            <img :src="currentImg" alt="Picture" />
+        </b-modal>
     </div>
 </main>
-
+<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 <script src="~/base64js.min.js"></script>
 <script src="~/gallery.js"></script>
