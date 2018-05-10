@@ -20,26 +20,21 @@
             </div>
             <div class="col-sm-6">
                 <h2>Upload files</h2>
-                <div v-if="!image">
-                    <h2>Select an image</h2>
-                    <input type="file" v-on:change="onFileChange">
-                </div>
-                <div v-else v-cloak>
-                    <img class="preview" :src="image" />
-                    <button class="btn btn-primary" v-on:click="uploadFile">Upload file</button>
-                    <button class="btn btn-danger" v-on:click="removeImage">Cancel</button>
-                </div>
-                <form action=""
-                      class="dropzone needsclick dz-clickable"
-                      id="image-upload"
-                      method="post"
-                      enctype="multipart/form">
-                    <div class="dz-message needsclick">
-                        <span class="note needsclick">
-                            Drop files here or click to upload.
-                        </span>
+                <div class="card">
+                    <div v-if="!image">
+                        <label>Select an image</label>
+                        <input type="file" v-on:change="onFileChange">
                     </div>
-                </form>
+                    <div v-else v-cloak>
+                        <figure>
+                            <img class="preview" :src="image" />
+                        </figure>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="uploadFile">Upload file</button>
+                            <button class="btn btn-danger" v-on:click="removeImage">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <table class="table table-bordered">
