@@ -25,8 +25,9 @@ new Vue({
           dataType: 'json',
           success: function(res) {
             res.files.forEach(f => {
-                f.dateCreated = (new Date(f.dateCreated))
-                        .toLocaleDateString('nb-NO', options)
+                var date = new Date(f.dateCreated);
+                date.setTime(date.getTime() + 2*3600*1000);
+                f.dateCreated = date.toLocaleDateString('nb-NO', options)
             })
             vm.files = res.files;
           }
@@ -58,7 +59,6 @@ new Vue({
                 ],
                 "size": files[0].size
             };
-          console.log(files[0]);
           this.createImage(files[0]);
         },
         createImage(file) {
