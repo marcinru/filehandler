@@ -2,7 +2,14 @@
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit', second: '2-digit'
 };
-
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 var vm = new Vue({
     el: '#app',
     data: {
@@ -36,7 +43,6 @@ var vm = new Vue({
     },
     methods: {
         uploadFile() {
-            console.log('uploadFile')
             $.ajax({
                 url: 'http://filehandler2hackathonapi.azurewebsites.net/api/file/post',
                 type: 'POST',
@@ -44,28 +50,19 @@ var vm = new Vue({
                 data: JSON.stringify(this.fileToUpload),
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res)
+                    vm.removeImage()
                 }
             })
         },
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
-
-getBase64(files[0]).then(
-  base64content => {
-    var commaIndex = base64content.indexOf(',') + 1;
-    vm.fileToUpload.content = base64content.substring(commaIndex)
-  }
-);
+            getBase64(files[0]).then(
+              base64content => {
+                var commaIndex = base64content.indexOf(',') + 1;
+                vm.fileToUpload.content = base64content.substring(commaIndex)
+              }
+            );
             this.fileToUpload = {
                 "name": files[0].name,
                 "content": '',
