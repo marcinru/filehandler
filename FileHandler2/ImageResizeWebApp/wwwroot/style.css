@@ -48,3 +48,8 @@ body {
 [v-cloak] {
     display: none;
 }
+
+.preview {
+    max-height: 300px;
+    max-width: 400px;
+}

@@ -19,7 +19,16 @@
             </div>
             <div class="col-sm-6">
                 <h2>Upload files</h2>
-                <form action="/api/images/upload"
+                <div v-if="!image">
+                    <h2>Select an image</h2>
+                    <input type="file" v-on:change="onFileChange">
+                </div>
+                <div v-else v-cloak>
+                    <img class="preview" :src="image" />
+                    <button class="btn btn-primary">Upload file</button>
+                    <button class="btn btn-danger" v-on:click="removeImage">Cancel</button>
+                </div>
+                <form action="http://filehandler2hackathonapi.azurewebsites.net/api/file/post"
                       class="dropzone needsclick dz-clickable"
                       id="image-upload"
                       method="post"
