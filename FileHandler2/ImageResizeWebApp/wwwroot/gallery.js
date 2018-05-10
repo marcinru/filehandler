@@ -7,7 +7,8 @@ new Vue({
     data: {
         files: [],
         search: '',
-        image: ''
+        image: '',
+        fileToUpload: {}
     },
     computed: {
         filteredFiles() {
@@ -34,8 +35,9 @@ new Vue({
       methods: {
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
-          if (!files.length)
-            return;
+          if (!files.length) return;
+          this.fileToUpload = files[0];
+          console.log(files[0]);
           this.createImage(files[0]);
         },
         createImage(file) {
