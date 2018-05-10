@@ -41,7 +41,7 @@
                     <th>Upload date</th>
                     <th>Owner</th>
                     <th>Tags</th>
-                    <th>Download</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody v-cloak>
@@ -51,7 +51,7 @@
                     <td>{{file.dateCreated}}</td>
                     <td>{{file.createdBy}}</td>
                     <td>{{file.tags}}</td>
-                    <td><button class="btn btn-primary">Download</button></td>
+                    <td><button v-on:click="getFile(file.fileUid)" class="btn btn-primary">Show</button></td>
                 </tr>
             </tbody>
         </table>

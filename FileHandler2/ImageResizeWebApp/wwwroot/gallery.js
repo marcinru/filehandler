@@ -45,6 +45,18 @@ vm = new Vue({
                 vm.removeImage()
             })
         },
+        getFile(uid) {
+            console.log('getFile')
+            var fileUid = '6d2b9487-9b0f-470f-a381-3276cb296e87';
+            $.get('https://filehandler2hackathonapi.azurewebsites.net/api/file/Download?fileUid=' + uid,
+                function(res) {
+                    var image = new Image();
+                    var indexLast = res.fileName.lastIndexOf('.')
+                    var extension = res.fileName.substring(indexLast + 1);
+                    image.src = 'data:image/' + extension + ';base64,' + res.content;
+                    document.body.appendChild(image);
+                })
+        },
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
