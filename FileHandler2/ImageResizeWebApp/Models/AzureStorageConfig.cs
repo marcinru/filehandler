@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ImageResizeWebApp.Models
+﻿namespace FileHandler2Gui.Models
 {
     public class AzureStorageConfig
     {

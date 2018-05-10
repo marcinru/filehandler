@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
+using FileHandler2Gui.Helpers;
+using FileHandler2Gui.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ImageResizeWebApp.Models;
 using Microsoft.Extensions.Options;
 
-using System.IO;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Auth;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
-using ImageResizeWebApp.Helpers;
-
-namespace ImageResizeWebApp.Controllers
+namespace FileHandler2Gui.Controllers
 {
     [Route("api/[controller]")]
     public class ImagesController : Controller

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageResizeWebApp", "ImageResizeWebApp\ImageResizeWebApp.csproj", "{2D9BD5DF-DC9A-4A10-B96D-CDC923D1A54A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileHandler2Gui", "ImageResizeWebApp\FileHandler2Gui.csproj", "{2D9BD5DF-DC9A-4A10-B96D-CDC923D1A54A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E222D0A-9D6B-4618-B3D8-A6ED21CCE162}
 	EndGlobalSection
 EndGlobal

@@ -14,6 +14,8 @@
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
+    <RootNamespace>FileHandler2Gui</RootNamespace>
+    <AssemblyName>FileHandler2Gui</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
