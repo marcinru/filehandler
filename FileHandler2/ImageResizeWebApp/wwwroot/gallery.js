@@ -38,10 +38,8 @@ new Vue({
             $.ajax({
                 url: 'http://filehandler2hackathonapi.azurewebsites.net/api/file/post',
                 type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: {
-                    file: this.fileToUpload
-                },
+                contentType: 'application/json',
+                data: JSON.stringify(this.fileToUpload),
                 dataType: 'json',
                 success: function (res) {
                     console.log(res)
