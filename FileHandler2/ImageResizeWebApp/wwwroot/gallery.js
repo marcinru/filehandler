@@ -32,11 +32,34 @@ new Vue({
           }
         })
     },
-      methods: {
+    methods: {
+        uploadFile() {
+            console.log('uploadFile')
+            $.ajax({
+                url: 'http://filehandler2hackathonapi.azurewebsites.net/api/file/post',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: {
+                    file: this.fileToUpload
+                },
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+        },
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
           if (!files.length) return;
-          this.fileToUpload = files[0];
+            this.fileToUpload = {
+                "name": files[0].name,
+                "content": "VGhpcyBpcyBhIHRlc3QgZmlsZSBlbmNvZGVkIHdpdGggQmFzZTY0",
+                "userName": "slupski",
+                "tags": [
+                    "SomeTag", "SomeOtherTag"
+                ],
+                "size": files[0].size
+            };
           console.log(files[0]);
           this.createImage(files[0]);
         },

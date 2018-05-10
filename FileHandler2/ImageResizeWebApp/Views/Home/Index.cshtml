@@ -26,10 +26,10 @@
                 </div>
                 <div v-else v-cloak>
                     <img class="preview" :src="image" />
-                    <button class="btn btn-primary">Upload file</button>
+                    <button class="btn btn-primary" v-on:click="uploadFile">Upload file</button>
                     <button class="btn btn-danger" v-on:click="removeImage">Cancel</button>
                 </div>
-                <form action="http://filehandler2hackathonapi.azurewebsites.net/api/file/post"
+                <form action=""
                       class="dropzone needsclick dz-clickable"
                       id="image-upload"
                       method="post"
@@ -42,7 +42,6 @@
                 </form>
             </div>
         </div>
-
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -63,29 +62,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!--
-        <h2>Generated Thumbnails</h2>
-        <div id="stored-images"></div>
-            <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
-                <div class="slides"></div>
-                <h3 class="title"></h3>
-                <a class="prev">‹</a>
-                <a class="next">›</a>
-                <a class="play-pause"></a>
-                <ol class="indicator"></ol>
-            </div>
-        </div>
-        <div class="box footer">
-            <hr>
-            <div class="privacy">
-                <p>
-                    This app has no official privacy policy. Your data will be uploaded to a service in order produce a picture.
-                    Your images will be public once you upload them and there is no automated way to remove them.
-                </p>
-            </div>
-        </div>
-        -->
     </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -93,4 +69,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="gallery.js"></script>
+<script src="~/gallery.js"></script>
+<script src="~/base64js.min.js"></script>
