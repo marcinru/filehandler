@@ -2,7 +2,8 @@
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit', second: '2-digit'
 };
-new Vue({
+
+var vm = new Vue({
     el: '#app',
     data: {
         files: [],
@@ -49,10 +50,25 @@ new Vue({
         },
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
-          if (!files.length) return;
+            if (!files.length) return;
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+getBase64(files[0]).then(
+  base64content => {
+    var commaIndex = base64content.indexOf(',') + 1;
+    vm.fileToUpload.content = base64content.substring(commaIndex)
+  }
+);
             this.fileToUpload = {
                 "name": files[0].name,
-                "content": "VGhpcyBpcyBhIHRlc3QgZmlsZSBlbmNvZGVkIHdpdGggQmFzZTY0",
+                "content": '',
                 "userName": "slupski",
                 "tags": [
                     "SomeTag", "SomeOtherTag"
@@ -64,7 +80,6 @@ new Vue({
         createImage(file) {
           var image = new Image();
           var reader = new FileReader();
-          var vm = this;
 
           reader.onload = (e) => {
             vm.image = e.target.result;
