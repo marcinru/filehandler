@@ -28,13 +28,13 @@
     .dropzone {
         border: 3px dashed #00a1f1;
         background: #F0F8FF;
-        margin: 25px;
+        margin: 25px 25px 0 0;
         border-radius: 5px;
         max-width: 400px;
     }
 
     .dropzone .dz-message {
-        font-weight: 350;
+        font-weight: 300;
     }
 
     .dropzone .dz-message .note {
@@ -42,14 +42,18 @@
         font-size: 18px;
         font-weight: 200;
         display: block;
-        margin-top 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    body {
+        background: url('cloud-file-upload.jpg') no-repeat -100px -100px;
     }
 </style>
 
 
 <main>
     <div class="box header">
-        <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">FileHandler2</span></h1>
+        <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">File Handler in the Cloud</span></h1>
     </div>
     
     <div class="box content">
@@ -57,10 +61,10 @@
         <h2>Upload photos</h2>
         <div>
             <form action="/api/images/upload"
-                 class="dropzone needsclick dz-clickable" 
-                 id="image-upload"
-                 method="post"
-                 enctype="multipart/form">
+                  class="dropzone needsclick dz-clickable"
+                  id="image-upload"
+                  method="post"
+                  enctype="multipart/form">
 
                 <div class="dz-message needsclick">
                     <span class="note needsclick">
@@ -69,11 +73,9 @@
                 </div>
             </form>
         </div>
+        <!--
         <h2>Generated Thumbnails</h2>
-            <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
-            <div id="stored-images"></div>
-
-            <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+        <div id="stored-images"></div>
             <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
                 <div class="slides"></div>
                 <h3 class="title"></h3>
@@ -83,13 +85,16 @@
                 <ol class="indicator"></ol>
             </div>
         </div>
-    </div>
-    <div class="box footer">
-        <hr>
-        <div class="privacy">
-            <p>This app has no official privacy policy. Your data will be uploaded to a service in order produce a picture.
-                Your images will be public once you upload them and there is no automated way to remove them.</p>
+        <div class="box footer">
+            <hr>
+            <div class="privacy">
+                <p>
+                    This app has no official privacy policy. Your data will be uploaded to a service in order produce a picture.
+                    Your images will be public once you upload them and there is no automated way to remove them.
+                </p>
+            </div>
         </div>
+        -->
     </div>
 </main>
 
@@ -153,9 +158,7 @@
     // Start first interval
     fetchImageLinks()
     
-    setInterval(function() {
-        fetchImageLinks()
-    }, 5000) 
+    //setInterval(function() { fetchImageLinks() }, 5000) 
 
     /* Dropzone */
     // "imageUpload" is the camelized version of the HTML element's ID
