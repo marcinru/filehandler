@@ -1,0 +1,5 @@
+az webapp config appsettings set --name <web_app> --resource-group myResourceGroup \
+--settings AzureStorageConfig__AccountName=<blob_storage_account> \
+AzureStorageConfig__ImageContainer=images  \
+AzureStorageConfig__ThumbnailContainer=thumbnails \
+AzureStorageConfig__AccountKey=<blob_storage_key> 
