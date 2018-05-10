@@ -11,5 +11,7 @@ namespace FileHandler2.Api.Dto
         public DateTime DateCreated { get; set; }
 
         public string CreatedBy { get; set; }
+
+        public string Tags { get; set; }
     }
 }

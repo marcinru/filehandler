@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FileHandler2.Api.Dto;
+using FileHandler2.Api.Helpers;
+using FileHandler2.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace FileHandler2.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class FileController : Controller
     {
+        private readonly Model.FileHandlerContext _context;
+        private readonly AzureStorageConfig _storageConfig;
+
+        public FileController(Model.FileHandlerContext context, IOptions<AzureStorageConfig> storageConfig)
+        {
+            _context = context;
+            _storageConfig = storageConfig.Value;
+        }
+
         [HttpPost]
         public FileGetResponseDto List([FromBody]FileGetRequestDto input)
         {
-            return new FileGetResponseDto()
+            var fileListDb = _context.FileReferences.Where(a => a.Actual > 0).ToList();
+
+            FileGetResponseDto response = new FileGetResponseDto();
+
+            foreach (var dbFileReference in fileListDb)
             {
-                Files = new List<FileGetResponseDetailsDto>()
+                FileGetResponseDetailsDto details = new FileGetResponseDetailsDto()
                 {
-                    new FileGetResponseDetailsDto()
-                    {
-                        FileName = "test file 1",
-                        DateCreated = DateTime.Now,
-                        FileUid = Guid.NewGuid(),
-                        CreatedBy = "api mock"
-                    },
-                    new FileGetResponseDetailsDto()
-                    {
-                        FileName = "test file 2",
-                        DateCreated = DateTime.Now,
-                        FileUid = Guid.NewGuid(),
-                        CreatedBy = "api mock"
-                    },
-                    new FileGetResponseDetailsDto()
-                    {
-                        FileName = "test file 3",
-                        DateCreated = DateTime.Now,
-                        FileUid = Guid.NewGuid(),
-                        CreatedBy = "api mock"
-                    }
-                }
-            };
+                    FileUid = dbFileReference.FileUid,
+                    DateCreated = dbFileReference.CDate,
+                    CreatedBy = dbFileReference.CBy,
+                    FileName = dbFileReference.Name,
+                    Tags = XmlHelper.GetTagsCsv(dbFileReference.Tags)
+                };
+
+                response.Files.Add(details);
+            }
+
+            return response;
         }
 
         [HttpGet]
@@ -55,8 +61,45 @@ namespace FileHandler2.Api.Controllers
 
 
         [HttpPost]
-        public void Post([FromBody]FilePostInputDto input)
+        public async Task<IActionResult> Post([FromBody]FilePostInputDto input)
         {
+
+            //convert base64 to stream
+            byte[] fileContent = Convert.FromBase64String(input.Content);
+            Guid fileUid = Guid.NewGuid();
+
+
+            var result = await StorageHelper.UploadFileToStorage(new MemoryStream(fileContent), fileUid.ToString(), _storageConfig);
+
+            var existing = _context.FileReferences.Where(a => a.Name == input.Name).AsEnumerable();
+
+            foreach (var entry in existing)
+            {
+                entry.Actual = 0;
+            }
+
+            if (result != null && result.Success)
+            {
+
+                // insert to database
+                _context.FileReferences.Add(new FileReference()
+                {
+                    FileUid = fileUid,
+                    Name = input.Name,
+                    Actual = 1,
+                    CBy = input.UserName,
+                    CDate = DateTime.Now,
+                    Tags = XmlHelper.GetTagsXml(input.Tags),
+                    Url = result.FileUrl,
+                    FileSize = input.Size
+                });
+
+                _context.SaveChanges();
+
+                return new AcceptedResult();
+            }
+
+            return StatusCode(500);
         }
 
         [HttpDelete]
@@ -64,4 +107,8 @@ namespace FileHandler2.Api.Controllers
         {
         }
     }
+}
+
+namespace FileHandler2.Api.Helpers
+{
 }
