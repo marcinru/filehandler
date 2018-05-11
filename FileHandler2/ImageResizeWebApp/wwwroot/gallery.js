@@ -1,22 +1,16 @@
 ﻿var options = {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     hour: '2-digit', minute: '2-digit', second: '2-digit'
-};
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
-var vm = new Vue({
+},
+vm = new Vue({
     el: '#app',
     data: {
         files: [],
         search: '',
         image: '',
-        fileToUpload: {}
+        fileToUpload: {},
+        currentImg: '',
+        modalTitle: ''
     },
     computed: {
         filteredFiles() {
@@ -48,11 +42,21 @@ var vm = new Vue({
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(this.fileToUpload),
-                dataType: 'json',
-                success: function (res) {
-                    vm.removeImage()
-                }
+                cache: false,
+            }).done(function (res) {
+                vm.removeImage()
             })
+        },
+        getFile(uid) {
+            console.log('getFile')
+            var fileUid = '6d2b9487-9b0f-470f-a381-3276cb296e87';
+            $.get('https://filehandler2hackathonapi.azurewebsites.net/api/file/Download?fileUid=' + uid,
+                function(res) {
+                    vm.modalTitle = res.fileName;
+                    var indexLast = res.fileName.lastIndexOf('.')
+                    var extension = res.fileName.substring(indexLast + 1);
+                    vm.currentImg = 'data:image/' + extension + ';base64,' + res.content;
+                })
         },
         onFileChange(e) {
           var files = e.target.files || e.dataTransfer.files;
@@ -85,6 +89,15 @@ var vm = new Vue({
         },
         removeImage: function (e) {
           this.image = '';
+          this.fileToUpload = {};
         }
       }
-})
+    })
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
