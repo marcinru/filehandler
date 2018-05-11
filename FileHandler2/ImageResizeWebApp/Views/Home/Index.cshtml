@@ -50,7 +50,10 @@
                     <td>{{file.dateCreated}}</td>
                     <td>{{file.createdBy}}</td>
                     <td>{{file.tags}}</td>
-                    <td><button v-b-modal.modal1 v-on:click="getFile(file.fileUid)" class="btn btn-primary">Show</button></td>
+                    <td>
+                        <button v-b-modal.modal1 v-on:click="getFile(file.fileUid)" class="btn btn-primary">Show</button>
+                        <button class="btn btn-info" v-on:click="downloadFile(file.fileUid)">Download</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
