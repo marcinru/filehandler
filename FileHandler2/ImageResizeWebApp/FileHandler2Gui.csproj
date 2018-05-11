@@ -37,11 +37,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\gallery.js" />
     <Content Remove="wwwroot\EmptyCSSFile.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\gallery.js" />
     <None Include="wwwroot\style.css" />
   </ItemGroup>
 </Project>

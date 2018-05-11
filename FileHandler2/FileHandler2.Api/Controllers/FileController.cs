@@ -111,7 +111,7 @@ namespace FileHandler2.Api.Controllers
 
                 _context.SaveChanges();
 
-                return new AcceptedResult();
+                return StatusCode(200);
             }
 
             return StatusCode(500);
