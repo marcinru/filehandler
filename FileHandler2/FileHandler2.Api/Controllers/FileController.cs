@@ -74,6 +74,26 @@ namespace FileHandler2.Api.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<FileResult> DownloadFile([FromQuery]Guid fileUid)
+        {
+            //db side
+            var dbFileData = _context.FileReferences.FirstOrDefault(u => u.FileUid == fileUid);
+
+            if (dbFileData != null)
+            {
+                MemoryStream response = await StorageHelper.GetFileContent(_storageConfig, fileUid);
+
+                byte[] respBytes = response.ToArray();
+
+                return File(respBytes, Helpers.FileTypeRecognizer.GetMimeType(System.IO.Path.GetExtension(dbFileData.Name)), dbFileData.Name);
+
+            }
+            else
+            {
+                throw new HttpRequestException("File not found");
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]FilePostInputDto input)
